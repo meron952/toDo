@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TodoList</title>
+  <link rel="stylesheet" href="css/Todo.css">
+</head>
+<body>
+  <section>
+    <div>
+      やること:<input type="text" id="todo" placeholder="やることを入力して下さい">
+      名前:    <input type="text" id="name" placeholder="名前を入力して下さい">
+      期限:    <input type="date" id="date"> <button id="target">リストに追加する</button>
+     
+    </div>
+    
+   
+
+
+    <ul id="task_list">
+
+    </ul>
+  </section>
+
+  <script>
+    'use strict';
+
+    // 追加ボタンのIdを取得
+    const target = document.getElementById('target');
+
+    const text = document.getElementById('todo'); // 入力
+
+    const list = document.getElementById('task_list'); // 結果のリスト
+
+    //  名前を取得
+    let name = document.getElementById('name');
+
+    
+
+    // 日時を取得
+    const date = document.getElementById('date');
+
+    // ボタンクリック時の処理
+    target.addEventListener('click', () => {
+
+       // 削除ボタンと入力内容の親となる要素をつくる
+      const todoItem = document.createElement('div');
+
+      // 新規リスト作成
+      const todo = document.createElement('li');
+
+      // 親要素に追加
+      // todoItem.appendChild(todo);
+
+
+      // 入力内容を格納
+      todo.innerHTML =  "やること : " + text.value;
+
+      //入力フォームを空文字にする
+      text.value = "";
+
+
+       //  名前を入れる要素を作成
+       const nameBox = document.createElement('p');
+
+       // 親要素に追加
+      //  todoItem.appendChild(nameBox);
+       
+       
+       // 入力内容を格納
+       nameBox.innerHTML = "名前 : " + name.value;
+       
+       //入力フォームを空文字にする
+       name.value = "";
+       
+       // 日付を入れる要素を作成
+       const dateBox = document.createElement('p');
+
+      
+       
+       // 親要素に追加
+      //  todoItem.appendChild(dateBox);
+       
+       
+       // 入力内容を格納
+       dateBox.innerHTML = "最終期限日 : " + date.value;
+
+       //入力フォームを空文字にする
+      date.value = "";
+
+      // 削除ボタンを作成
+      const delete_button = document.createElement('button');
+
+      // 親要素に追加
+      // todoItem.appendChild(delete_button);
+      
+     
+
+
+     
+     delete_button.textContent = "削除"; //ボタンの表示名を削除とする
+
+     delete_button.classList.add('delete'); //削除ボタンにクラスを追加
+
+     // Dateオブジェクトを初期化
+    const now = new Date();
+    
+    // 年を取得
+    const year = now.getFullYear();
+
+    // 月を取得
+    const month = now.getMonth();
+
+    // 日を取得
+    const day = now.getDate();
+
+    // 年月日を一つにまとめる
+    const currentDay = `${year}-${month + 1}-${day} `;
+
+    // 作成日時を入れる要素を作成
+    const currentDayBox = document.createElement('p');
+
+    // 入力内容を格納
+    currentDayBox.innerHTML = "作成日時 : " +  currentDay;
+
+    
+
+    // checkBoxを作成
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.classList.add('check'); //クラスを追加
+
+   
+
+   
+
+    
+
+
+    
+
+    
+
+    //  やること、名前、作成日時、期限日、チェックボックス、削除ボタンの配列を作成
+    const listItem = [todo,checkbox,nameBox,currentDayBox ,dateBox,delete_button];
+
+
+
+    for(let i = 0; i < listItem.length; i++){
+      todoItem.appendChild(listItem[i]);
+    }
+
+
+    // HTML要素に追加  
+    list.appendChild(todoItem);
+
+    
+
+    // 削除ボタンクリック時の処理
+    delete_button.onclick = function(){
+
+      const choseDelete = delete_button.closest('div');//押された削除ボタンから一番近いdivタグを取得
+
+      // console.log(choseDelete);//choseDeleteが取得できているか確認→取得できている
+
+      list.removeChild(choseDelete);//該当要素を削除    
+
+
+      text.value = "";//入力フォームを空にする
+    }
+
+
+
+   
+    
+
+      // checkbox(クラス名がcheck) の要素を取得
+      const checkboxes = document.getElementsByClassName("check");
+
+      for(let i = 0; i < checkboxes.length; i++){
+        
+        // チェックボックスの内容に変化(チェックが付いた時とチェックが外れた時の両方)があったときの処理
+        checkboxes[i].addEventListener('change',function(){
+
+          const choseChecked = checkboxes[i].closest('div'); //押されたチェックボックスから一番近いdivタグを取得
+
+          if(checkboxes[i].checked){//checkboxの状態を判定
+            
+            choseChecked.classList.add('Checked');//クラスを追加(このクラスにcssを追加する)
+          } else{
+            choseChecked.classList.add('notChecked');//クラスを追加(このクラスにcssを追加する)
+          }
+
+          
+        },false);
+      }
+          
+
+      
+
+  
+
+
+
+   //削除ボタンクリック時の処理(削除ボタンを押すとすべて消える)
+  // delete_button.onclick = function (){
+    
+  //   list.innerHTML = ""; //要素を全て削除
+
+  //   text.value = "";  //入力フォームを空文字にする
+  // }
+  
+  
+  
+  
+})
+
+
+
+
+
+    
+
+
+
+
+     
+
+   
+
+
+
+
+      
+    
+     
+  
+      
+
+      
+
+
+      
+
+
+
+     
+
+   
+    
+
+    
+
+  </script>
+</body>
+</html>
